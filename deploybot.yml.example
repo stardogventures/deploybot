@@ -1,0 +1,22 @@
+port: 9999
+
+slack_user: deploybot
+slack_token: slack_token_here
+slack_channel: your_channel_here
+
+jenkins_token: jenkins_token_here
+jenkins_url: https://jenkins.example.com
+jenkins_deploys:
+  api:
+    job: deploy
+    params:
+      playbook: api
+  ui:
+    job: deploy-ui
+    params:
+      playbook: ui
+      anotherParam: here
+
+sqs_autoscaling_queue_url: https://sqs.us-east-1.amazonaws.com/000000000000/autoscaling
+route53_zone_name: example.pvt
+autoscaling_delay: 120
