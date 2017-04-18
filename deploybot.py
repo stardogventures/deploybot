@@ -213,9 +213,8 @@ def process_event(event):
             process_test(cmd, event)
         elif cmd.startswith('deploy'):
             process_deploy(cmd, event)
-        elif cmd.startswith('completed deploy of'):
-            # ignore - improve this in the future
-        else:
+        elif not cmd.startswith('completed deploy of'):
+            # ignore above - improve this in the future
             send_message("I don't know how to do that: `%s`" % cmd)
             process_help()
     except Exception as e:
