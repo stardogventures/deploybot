@@ -1,5 +1,6 @@
 # deploybot
 Slack deploybot for Jenkins with support for EC2 autoscaling
+
 by Ian White and Stardog Ventures
 
 This bot was originally based on example bot code published by Adrien Chauve of Serenytics at https://tech-blog.serenytics.com/deploy-your-saas-with-a-slack-bot-f6d1fc764658
@@ -18,6 +19,26 @@ The bot can be configured to listen for EC2 autoscaling notifications via an SNS
 
 Optionally, the bot can be configured to add A records with the new instance's private IP into a Route 53 zone, to give your EC2 instances friendly names. The new instance will automatically be assigned the name `<groupname>-<number>`. For example, a newly launched server in the `api` autoscaling group might receive the name `api-5`.
 
+## Usage
+
+Run the bot with:
+
+```
+nohup python deploybot.py &
+```
+
+When the deploy bot is running, you can issue deploys in your Slack channel with:
+
+```
+deploybot deploy <module> <target> <branch>
+```
+
+For example, to deploy the API to production, you might:
+
+```
+deploybot deploy api prod
+```
+
 ## Dependencies
 
 Ensure that you have the following libraries pip installed:
@@ -30,7 +51,7 @@ pip install boto3 slackclient requests
 
 The bot relies on a .yml config file. By default it expects the file to be named `deploybot.yml` and living in the same folder, but you can pass the path as a command-line argument.
 
-See the example YML file for example configuration, and fill in with your own values.
+See the [example YML](deploybot.yml.example) file for example configuration, and fill in with your own values.
 
 ## Jenkins Setup
 
