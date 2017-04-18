@@ -103,7 +103,7 @@ def assign_ec2_name_tag(instance_id, name):
 # run a jenkins deploy job based on the configuration
 def deploy(module, target='prod', branch='master', username='deploybot'):
     job = JENKINS_DEPLOYS[module]['job']
-    jenkins_url = JENKINS_URL + '/buildByToken/buildWithParameters?token=' + JENKINS_TOKEN + '&job=' + job + '&target=' + target + '&branch=' + branch + '&username=username'
+    jenkins_url = JENKINS_URL + '/buildByToken/buildWithParameters?token=' + JENKINS_TOKEN + '&job=' + job + '&target=' + target + '&branch=' + branch + '&username=' + username
     if 'params' in JENKINS_DEPLOYS[module]:
         for k in JENKINS_DEPLOYS[module]['params']:
             jenkins_url += '&' + k + '=' + JENKINS_DEPLOYS[module]['params'][k]
@@ -161,7 +161,7 @@ def get_username(userid):
     result = slack_client.api_call('users.info', user=userid)
     return result['user']['name']
 
-def process_help(cmd, event):
+def process_help():
     modules = ''
     for module in JENKINS_DEPLOYS:
         modules += ' `' + module + '`'
@@ -208,7 +208,7 @@ def process_event(event):
     # process command
     try:
         if cmd.startswith('help'):
-            process_help(cmd, event)
+            process_help()
         elif cmd.startswith('test'):
             process_test(cmd, event)
         elif cmd.startswith('deploy'):
@@ -216,7 +216,8 @@ def process_event(event):
         else:
             send_message("I don't know how to do that: `%s`" % cmd)
             process_help()
-    except Exception:
+    except Exception as e:
+        logging.exception(e)
         return process_help()
 
 
