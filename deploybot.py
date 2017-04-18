@@ -216,7 +216,7 @@ def process_event(event):
         else:
             send_message("I don't know how to do that: `%s`" % cmd)
             process_help()
-    except HelpException:
+    except Exception:
         return process_help()
 
 
